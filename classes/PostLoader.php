@@ -24,6 +24,12 @@ class PostLoader
         return $this->posts;
     }
 
-
+    /**
+     * @param Post[] $posts
+     */
+    public function setPosts(array $posts): void
+    {
+        $this->posts = $posts;
+    }
 }
 

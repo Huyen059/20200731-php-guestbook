@@ -4,19 +4,18 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-require 'resources/classes/Post.php';
-require 'resources/classes/PostLoader.php';
+require 'classes/Post.php';
+require 'classes/PostLoader.php';
 
-session_start();
+try {
+    $postData = json_decode(file_get_contents('resources/posts.json'), true, 512, JSON_THROW_ON_ERROR);
+}  catch (JsonException $exception) {
+    throw new JsonException("Error");
+}
 
-if (isset($_SESSION['postLoader'])) {
-    /**
-     * @var PostLoader $postLoader
-     */
-    $postLoader = $_SESSION['postLoader'];
-} else {
-    $postLoader = new PostLoader();
-    $_SESSION['postLoader'] = $postLoader;
+$postLoader = new PostLoader();
+if ($postData) {
+    $postLoader->setPosts($postData);
 }
 
 if (isset($_POST['submit'])) {
@@ -29,12 +28,16 @@ if (isset($_POST['submit'])) {
     }
     $post = new Post($title, $content, $firstName, $lastName);
     $postLoader->addPost($post);
+
+    try {
+        file_put_contents('resources/posts.json', json_encode($postLoader->getPosts(), JSON_THROW_ON_ERROR));
+    } catch (JsonException $exception) {
+        throw new Exception('Error put content');
+    }
 }
 
 
 
-echo 'hi';
-
-require 'resources/header.php';
-require 'resources/form-view.php';
-require 'resources/footer.php';
+require 'display/header.php';
+require 'display/form-view.php';
+require 'display/footer.php';

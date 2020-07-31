@@ -4,7 +4,7 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-class Post
+class Post implements JsonSerializable
 {
     private string $title, $content, $firstName, $lastName;
     private DateTime $date;
@@ -25,4 +25,14 @@ class Post
         $this->date = new DateTime();
     }
 
+    public function jsonSerialize()
+    {
+        return [
+          'title' => $this->title,
+          'content' => $this->content,
+          'firstName' => $this->firstName,
+          'lastName' => $this->lastName,
+          'date' => $this->date
+        ];
+    }
 }
