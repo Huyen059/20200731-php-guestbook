@@ -6,22 +6,23 @@ error_reporting(E_ALL);
 
 class Post
 {
-    private string $title, $content, $authorName;
+    private string $title, $content, $firstName, $lastName;
     private DateTime $date;
+
     /**
      * Post constructor.
      * @param string $title
      * @param string $content
-     * @param string $authorName
-     * @param DateTime $date
+     * @param string $firstName
+     * @param string $lastName
      */
-    public function __construct(string $title, string $content, string $authorName)
+    public function __construct(string $title, string $content, string $firstName, string $lastName)
     {
         $this->title = $title;
         $this->content = $content;
-        $this->authorName = $authorName;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
         $this->date = new DateTime();
     }
-
 
 }
