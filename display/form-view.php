@@ -28,7 +28,7 @@ error_reporting(E_ALL);
     <form method="post" class="my-5">
         <label>
             Number of posts to be displayed:
-            <input type="number" name="numberOfPost" value="20">
+            <input type="number" name="numberOfPost" value="<?php echo ($_POST['numberOfPost']) ?? 20; ?>">
             <button type="submit">Display</button>
         </label>
     </form>
