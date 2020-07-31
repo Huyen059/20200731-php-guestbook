@@ -9,6 +9,16 @@ require 'resources/classes/PostLoader.php';
 
 session_start();
 
+if (isset($_SESSION['postLoader'])) {
+    /**
+     * @var PostLoader $postLoader
+     */
+    $postLoader = $_SESSION['postLoader'];
+} else {
+    $postLoader = new PostLoader();
+    $_SESSION['postLoader'] = $postLoader;
+}
+
 if (isset($_POST['submit'])) {
     $title = htmlspecialchars(trim($_POST['title']));
     $firstName = htmlspecialchars(trim($_POST['firstName']));
@@ -18,18 +28,8 @@ if (isset($_POST['submit'])) {
         throw new Exception("All the fields are required.");
     }
     $post = new Post($title, $content, $firstName, $lastName);
-    /**
-     * @var PostLoader $postLoader
-     */
-    if (isset($_SESSION['postLoader'])) {
-        $postLoader = $_SESSION['postLoader'];
-    } else {
-        $postLoader = new PostLoader();
-        $_SESSION['postLoader'] = $postLoader;
-    }
     $postLoader->addPost($post);
 }
-
 
 
 

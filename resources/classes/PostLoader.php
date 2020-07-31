@@ -11,11 +11,7 @@ class PostLoader
      */
     private array $posts = [];
 
-    /**
-     * PostLoader constructor.
-     * @param Post $post
-     */
-    public function addPost (Post $post)
+    public function addPost(Post $post)
     {
         $this->posts[] = $post;
     }
