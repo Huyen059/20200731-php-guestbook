@@ -10,11 +10,11 @@ require 'classes/PostLoader.php';
 try {
     $postData = json_decode(file_get_contents('resources/posts.json'), true, 512, JSON_THROW_ON_ERROR);
 }  catch (JsonException $exception) {
-    throw new JsonException("Error");
+    $postData='';
 }
 
 $postLoader = new PostLoader();
-if ($postData) {
+if (is_array($postData)) {
     $postLoader->setPosts($postData);
 }
 
@@ -28,15 +28,13 @@ if (isset($_POST['submit'])) {
     }
     $post = new Post($title, $content, $firstName, $lastName);
     $postLoader->addPost($post);
-
-    try {
-        file_put_contents('resources/posts.json', json_encode($postLoader->getPosts(), JSON_THROW_ON_ERROR));
-    } catch (JsonException $exception) {
-        throw new Exception('Error put content');
-    }
 }
 
-
+try {
+    file_put_contents('resources/posts.json', json_encode($postLoader->getPosts(), JSON_THROW_ON_ERROR));
+} catch (JsonException $exception) {
+    throw new Exception('Error put content');
+}
 
 require 'display/header.php';
 require 'display/form-view.php';

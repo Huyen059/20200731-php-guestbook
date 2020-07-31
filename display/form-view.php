@@ -25,5 +25,24 @@ error_reporting(E_ALL);
         </div>
         <button type="submit" name="submit" class="w-100 btn btn-primary">Post</button>
     </form>
+    <form method="post" class="my-5">
+        <label>
+            Number of posts to be displayed:
+            <input type="number" name="numberOfPost" value="20">
+            <button type="submit">Display</button>
+        </label>
+    </form>
+    <div class="row">
+        <?php
+        $numberOfPosts = 20;
+        if(isset($_POST['numberOfPost'])){
+            /**
+             * @var PostLoader $postLoader
+             */
+            $numberOfPosts = (int)htmlspecialchars(trim($_POST['numberOfPost']));
+        }
+        echo $postLoader->displayPosts($numberOfPosts);
+        ?>
+    </div>
 </div>
 
