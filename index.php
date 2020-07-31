@@ -22,8 +22,9 @@ if (isset($_POST['submit'])) {
     $postLoader->save();
 }
 
-
-
+//$string = "Haha :-)";
+//$string = str_replace(':-)', '&#128512;', $string);
+//echo $string;
 require 'display/header.php';
 require 'display/form-view.php';
 require 'display/footer.php';

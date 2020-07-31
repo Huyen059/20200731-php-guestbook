@@ -8,6 +8,11 @@ class Post implements JsonSerializable
 {
     private string $title, $content, $firstName, $lastName;
     private DateTime $date;
+    private array $emojis = [
+        ':-)' => '&#128512;',
+        ';-)' => '&#128521;',
+        ':-(' => '&#128543;'
+    ];
 
     /**
      * Post constructor.
@@ -33,6 +38,9 @@ class Post implements JsonSerializable
         $this->date = $date;
     }
 
+    /**
+     * @return array|mixed
+     */
     public function jsonSerialize()
     {
         return [
@@ -44,10 +52,15 @@ class Post implements JsonSerializable
         ];
     }
 
-
-
+    /**
+     * @return string
+     */
     public function displayPost(): string
     {
+        foreach ($this->emojis as $smiley => $emoji) {
+            $newContent = str_replace($smiley, $emoji, $this->content);
+            $this->content = $newContent;
+        }
         return "
     <div class='col-sm-6 col-md-3 my-3'>
         <div class='card text-center'>

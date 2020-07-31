@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 class PostLoader
 {
-    const JSON_FILE = 'resources/posts.json';
+    public const JSON_FILE = 'resources/posts.json';
     /**
      * @var Post[]
      */
@@ -33,7 +33,7 @@ class PostLoader
         }
     }
 
-    public function addPost(Post $post)
+    public function addPost(Post $post): void
     {
         $this->posts[] = $post;
     }
